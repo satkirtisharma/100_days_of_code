@@ -1,0 +1,11 @@
+const btn=document.getElementById("start")
+const img1=document.getElementById("img1")
+const img2=document.getElementById("img2")
+    btn.addEventListener("click",() =>{
+        var c=img1.getAttribute("src")
+        var s=img2.getAttribute("src")
+        img2.setAttribute("src",c)
+        img1.setAttribute("src",s)
+        console.log("csaujhdbcjk")
+    })
+    img2.setAttribute("class","shabfh")
