@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen Sharing</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    video {
+        width: 100%;
+        height: auto;
+    }
+    #controls {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <h1>Screen Sharing Demo</h1>
+    <div id="controls">
+        <button id="startButton">Start Sharing</button>
+        <button id="stopButton" disabled>Stop Sharing</button>
+    </div>
+    <div id="videoContainer">
+        <video id="screenVideo" autoplay></video>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const screenVideo = document.getElementById('screenVideo');
+
+        let stream;
+
+        startButton.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                screenVideo.srcObject = stream;
+                startButton.disabled = true;
+                stopButton.disabled = false;
+            } catch (err) {
+                console.error('Error accessing screen:', err);
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (stream) {
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                screenVideo.srcObject = null;
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
